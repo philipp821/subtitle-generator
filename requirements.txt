@@ -1,0 +1,12 @@
+deepl==1.14.0
+ffmpeg==1.4
+Flask==2.3.2
+fpdf2==2.7.4
+librosa==0.10.0.post2
+nemo-toolkit[asr]==1.18.1
+numpy==1.24.3
+omegaconf==2.2.3
+panns-inference==0.1.1
+pytube
+stable-ts==2.6.4
+textblob==0.17.1

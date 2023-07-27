@@ -1,0 +1,8 @@
+data/configs/panns_inference/Cnn14_DecisionLevelMax_mAP=0.385.pth
+data/input/
+data/output/
+
+src/__pycache__
+venv/
+
+deepl.key

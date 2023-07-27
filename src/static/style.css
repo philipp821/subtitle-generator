@@ -1,0 +1,33 @@
+body {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background-color: white;
+}
+h1 {
+  font-size: 100px;
+  text-align: center;
+}
+h2 {
+  text-align: center;
+}
+h4 {
+  text-align: center;
+}
+.form-control:invalid {
+  border-color: red;
+}
+.index-column {
+  min-width: 1cm;
+  text-align: right;
+}
+.time-column {
+  min-width: 3cm;
+}
+.speaker-column {
+  min-width: 3cm;
+}
+.text-column {
+  min-width: 10cm;
+}
+.size-column {
+  min-width: 3cm;
+}

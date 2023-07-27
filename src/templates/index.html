@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="de">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Untertitel-Generator</title>
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <!-- Bootstrap font icon css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css">
+    <!-- Custom css -->
+    <link rel="stylesheet" href="../static/style.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 class="my-3">Untertitel-Generator</h1>
+      <h4 class="my-3">KI-gestützte Transkript- und Untertitelgenerierung.</h4>
+      <form onsubmit="return checkInput()" method="POST" action="/submit" enctype="multipart/form-data">
+
+        <!-- File and youtube input tabs -->
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#file-tab" type="button">Datei-Eingabe</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#url-tab" type="button">Link-Eingabe</button>
+          </li>
+        </ul>
+        <div class="border border-top-0 p-3">
+          <div class="tab-content">
+            <div class="tab-pane my-3 active" id="file-tab">
+              <label for="file-input" class="form-label">Wähle eine Audio-/Video-Datei:</label>
+              <input type="file" accept=".mp3, .mp4, .wav" class="form-control" id="file-input" name="file">
+            </div>
+            <div class="tab-pane my-3" id="url-tab">
+              <label for="youtube-input" class="form-label">Füge einen YouTube-Link ein:</label>
+              <input type="url" class="form-control" id="youtube-input" name="youtube-url">
+            </div>
+          </div>
+
+          <!-- Source language select -->
+          <div class="my-3">
+            <label for="source-language-dropdown" class="form-label">Wähle die Ausgangs-Sprache:</label>
+            <select class="form-select" id="source-language-dropdown" name="source-language">
+              <option value="None" selected>Automatisch erkennen</option>
+              <option value="BG">Bulgarisch</option>
+              <option value="ZH">Chinesisch</option>
+              <option value="DA">Dänisch</option>
+              <option value="DE">Deutsch</option>
+              <option value="EN">Englisch</option>
+              <option value="ET">Estnisch</option>
+              <option value="FI">Finnisch</option>
+              <option value="FR">Französisch</option>
+              <option value="EL">Griechisch</option>
+              <option value="HU">Ungarisch</option>
+              <option value="IT">Italienisch</option>
+              <option value="JA">Japanisch</option>
+              <option value="LV">Lettisch</option>
+              <option value="LT">Litauisch</option>
+              <option value="NL">Niederländisch</option>
+              <option value="PL">Polnisch</option>
+              <option value="PT">Portugiesisch</option>
+              <option value="RO">Rumänisch</option>
+              <option value="RU">Russisch</option>
+              <option value="SV">Schwedisch</option>
+              <option value="SK">Slowakisch</option>
+              <option value="SL">Slowenisch</option>
+              <option value="ES">Spanisch</option>
+              <option value="CS">Tschechisch</option>
+              <option value="TR">Türkisch</option>
+            </select>
+          </div>
+
+          <!-- Target language select -->
+          <div class="my-3">
+            <label for="target-language-dropdown" class="form-label">
+              Wähle die <a href="https://www.deepl.com/de/docs-api/translate-text/translate-text/" target="_blank" rel="noopener noreferrer" style="color: black;">Ziel-Sprache</a>:
+            </label>
+            <select class="form-select" id="target-language-dropdown" name="target-language">
+              <option value="None" selected>Nicht übersetzen</option>
+              <option value="BG">Bulgarisch</option>
+              <option value="ZH">Chinesisch</option>
+              <option value="DA">Dänisch</option>
+              <option value="DE">Deutsch</option>
+              <option value="EN-GB">Englisch (GB)</option>
+              <option value="EN-US">Englisch (US)</option>
+              <option value="ET">Estnisch</option>
+              <option value="FI">Finnisch</option>
+              <option value="FR">Französisch</option>
+              <option value="EL">Griechisch</option>
+              <option value="HU">Ungarisch</option>
+              <option value="IT">Italienisch</option>
+              <option value="JA">Japanisch</option>
+              <option value="LV">Lettisch</option>
+              <option value="LT">Litauisch</option>
+              <option value="NL">Niederländisch</option>
+              <option value="PL">Polnisch</option>
+              <option value="PT">Portugiesisch</option>
+              <option value="RO">Rumänisch</option>
+              <option value="RU">Russisch</option>
+              <option value="SV">Schwedisch</option>
+              <option value="SK">Slowakisch</option>
+              <option value="SL">Slowenisch</option>
+              <option value="ES">Spanisch</option>
+              <option value="CS">Tschechisch</option>
+              <option value="TR">Türkisch</option>
+            </select>
+          </div>
+
+          <!-- Whisper model select -->
+          <div class="my-3">
+            <label for="whisper-model-dropdown" class="form-label">
+              Wähle ein <a href="https://github.com/openai/whisper#available-models-and-languages" target="_blank" rel="noopener noreferrer" style="color: black;">Whisper-Model</a>:
+            </label>
+            <select class="form-select" id="whisper-model-dropdown" name="whisper-model">
+              <optgroup label="Multiligual Models">
+                <option value="tiny">tiny</option>
+                <option value="base">base</option>
+                <option value="small" selected>small</option>
+                <option value="medium">medium</option>
+                <option value="large">large</option>
+              </optgroup>
+              <optgroup label="English-only Models">
+                <option value="tiny.en">tiny.en</option>
+                <option value="base.en">base.en</option>
+                <option value="small.en">small.en</option>
+                <option value="medium.en">medium.en</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Speaker diarization checkbox -->
+          <div class="my-3">
+            <input type="checkbox" class="form-check-input" id="speaker-diarization-checkbox" name="speaker-diarization">
+            <label for="speaker-diarization-checkbox" class="form-check-label">Sprecher-Erkennung (Speaker Diarization)</label>
+          </div>
+
+          <!-- Sound event detection checkbox -->
+          <div class="my-3">
+            <input type="checkbox" class="form-check-input" id="sound-event-detection-checkbox" name="sound-event-detection">
+            <label for="sound-event-detection-checkbox" class="form-check-label">Geräusche identifizieren (Sound Event Detection)</label>
+          </div>
+
+          <!-- Output file format select -->
+          <div class="my-3">
+            <label for="output-format-dropdown" class="form-label">Wähle ein Ziel-Format:</label>
+            <select class="form-select" id="output-format-dropdown" name="output-format">
+              <optgroup label="Untertitel">
+                <option value="srt" selected>SRT - SubRip File Format (.srt)</option>
+                <option value="vtt">VTT - Web Video Text Tracks (.vtt)</option>
+                <option value="ass">ASS - Advanced SubStation Alpha (.ass)</option>
+              </optgroup>
+              <optgroup label="Transkript">
+                <option value="txt">TXT - Text File (.txt)</option>
+                <option value="pdf">PDF - Portable Document Format (.pdf)</option>
+              </optgroup>
+              <optgroup label="Video mit Untertitel">
+                <option value="mkv">MKV - "softsubbed" Matroska (.mkv)</option>
+                <option value="mp4">MP4 - "hardsubbed" MPEG-4 (.mp4)</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Submit button -->
+          <div class="d-flex align-items-center">
+            <button type="submit" class="btn btn-primary me-2" id="submit-button">Generieren</button>
+            <span id="loading-symbol" class="spinner-border spinner-border-sm me-2 d-none"></span>
+            <span id="check-circle" class="me-2 d-none"><i class="bi bi-check-circle-fill"></i></span>
+            <span id="status-display"></span>
+            <span id="timer-display" class="me-5"></span>
+
+            <!-- Download button -->
+            </form>
+            <form method="POST" action="/download" enctype="multipart/form-data">
+              <div class="d-flex align-items-center">
+                <span id="download-icon" class="px-0 d-none"><i class="bi bi-download"></i></span>
+                <button type="submit" class="btn btn-link px-1 me-3 d-none" id="download-button" style="color: black;">Download</button>
+              </div>
+            </form>
+
+            <!-- Edit button -->
+            <form method="POST" action="/edit" enctype="multipart/form-data">
+              <div class="d-flex align-items-center">
+                <span id="edit-icon" class="px-0 d-none"><i class="bi bi-pencil-fill"></i></span>
+                <button type="submit" class="btn btn-link px-1 d-none" id="edit-button" style="color: black;">Bearbeiten</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-label">Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="modal-body">
+            Ups! Etwas ist schiefgelaufen. Bitte versuche es erneut.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Okay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    <script src="../static/status.js"></script>
+    <script src="../static/index.js"></script>
+
+  </body>
+
+</html>
