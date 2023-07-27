@@ -13,6 +13,8 @@ This application was developed as part of a bachelor thesis.
 ## Example
 https://github.com/philipp821/subtitle-generator/assets/117348004/58167966-d641-46bc-9653-e36362c1cab3
 
+Video-URL: [https://www.youtube.com/watch?v=L6yE7fUE220](https://www.youtube.com/watch?v=L6yE7fUE220)
+
 More examples can be found [here](/data/examples/examples.md).
 
 ## Requirements
