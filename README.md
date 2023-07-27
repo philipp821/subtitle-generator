@@ -11,7 +11,7 @@ A website for AI-based transcript and subtitle generation including a small user
 This application was developed as part of a bachelor thesis.
 
 ## Example
-https://github.com/philipp821/transcript-generator/assets/117348004/28564461-3504-40b4-9c43-e32b69e12657
+https://github.com/philipp821/subtitle-generator/assets/117348004/58167966-d641-46bc-9653-e36362c1cab3
 
 More examples can be found [here](/data/examples/examples.md).
 
